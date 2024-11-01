@@ -1,4 +1,5 @@
 with Ada.Text_IO;
+with Ada.Numerics; use Ada.Numerics;
 with Ada.Numerics.Elementary_Functions; use Ada.Numerics.Elementary_Functions;
 with Interfaces.C;
 with Interfaces.C.Strings;
@@ -150,8 +151,6 @@ procedure Jack_Sine_Wave is
    Jack_Failed_To_Set_Process_Callback : exception;
    
    JACK_DEFAULT_AUDIO_TYPE : constant C.char_array := "32 bit float mono audio" & C.nul;
-
-   PI : constant Float := 3.1415926535;
 
    Name : constant C.char_array := "Jack Sine Wave" & C.nul;
    Client : jack_client_t_access := null;
