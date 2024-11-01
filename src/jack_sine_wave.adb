@@ -5,7 +5,7 @@ with Interfaces.C.Strings;
 with Interfaces.C.Pointers;
 with System;
 
-procedure Jack_Simple is
+procedure Jack_Sine_Wave is
    package IO renames Ada.Text_IO;
    package C renames Interfaces.C;
    package CStr renames Interfaces.C.Strings;
@@ -153,7 +153,7 @@ procedure Jack_Simple is
 
    PI : constant Float := 3.1415926535;
 
-   Name : constant C.char_array := "Jack Simple" & C.nul;
+   Name : constant C.char_array := "Jack Sine Wave" & C.nul;
    Client : jack_client_t_access := null;
    Ports : CStr_Array.Pointer := null;
    Port_O : jack_port_t_access := null;
@@ -208,4 +208,4 @@ begin
 
    IO.Put_Line ("jack_deactivate:" & jack_deactivate(Client)'Image);
    if jack_client_close(Client) /= 0 then raise Jack_Client_Failed_To_Close; end if;
-end Jack_Simple;
+end Jack_Sine_Wave;
