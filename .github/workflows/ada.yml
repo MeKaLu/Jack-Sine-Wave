@@ -18,7 +18,7 @@ jobs:
     - name: Set up GNAT toolchain
       run: >
         sudo apt-get update &&
-        sudo apt-get install gnat-12 gprbuild
+        sudo apt-get install gnat-12 gprbuild libjack-jackd2-0 libjack-jackd2-dev jackd2
 
     - name: Build
       run: gprbuild -j0 -p
