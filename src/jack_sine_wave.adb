@@ -159,19 +159,24 @@ procedure Jack_Sine_Wave is
    Port_O : jack_port_t_access := null;
    Port_Flags : C.unsigned := jack_port_is_physical'Enum_Rep or jack_port_is_input'Enum_Rep;
 
-   Phase : Float := 0.0;
+   Phase1 : Float := 0.0;
+   Phase2 : Float := 0.0;
    function Audio_Process (nframes : jack_nframes; arg : Jack_Callback_Data) return C.int is
       Output : CFloat_Ptr.Pointer := jack_port_get_buffer (arg.Output_Port, nframes);
       
       Sample_Rate : constant Float := Float (jack_get_sample_rate (arg.Client));
-      Frequency : constant Float := (280.0 / Sample_Rate);
+      Frequency1 : constant Float := (450.0 / Sample_Rate);
+      Frequency2 : constant Float := (440.0 / Sample_Rate);
       Amplitude : constant Float := 0.1;
    begin
       for I in 0 .. nframes - 1 loop
-         Phase := @ + Frequency;
-         if Phase > 1.0 then Phase := @ - 1.0; end if;
+         Phase1 := @ + Frequency1;
+         if Phase1 > 1.0 then Phase1 := @ - 1.0; end if;
+         Phase2 := @ + Frequency2;
+         if Phase2 > 1.0 then Phase2 := @ - 1.0; end if;
 
-         Output.all := Amplitude * Sin (Phase * 2.0 * PI);
+         -- Output.all := Amplitude * Sin (Phase * 2.0 * PI);
+         Output.all := Amplitude * (2.0 * Cos (((Phase1 - Phase2) / 2.0) * PI * 2.0)) * (Sin (((Phase1 + Phase2) / 2.0) * PI * 2.0));
          CFloat_Ptr.Increment (Output);
       end loop;
       return 0;
